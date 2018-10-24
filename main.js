@@ -59,17 +59,32 @@ async function myPluginCommand(selection)
             .catch(error => {
                 console.log(error);
             })
-
-            // Removing the "z" node
-            selection.items[0].removeFromParent();
+           
+           
             
+            const pluginFolders = await fs.getPluginFolder();
+            const entries = await pluginFolders.getEntries();
+            const compressedImage = await pluginFolder.getEntry('rendition.jpg');
 
-            // // Opening the compressed file into a variable
-            let compressedImage = await fs.getDataFolder();
-            console.log(compressedImage);
-            let fill = new ImageFill(compressedImage);
+            console.log(compressedImage)
+            // selection.items[0].removeFromParent();
+            // node = selection.items[0];
+            // command.duplicate();
+            
+        
+            // Removing the "z" node
+            //selection.items[0].removeFromParent();
+            console.log("The compressed image file is: ",compressedImage.name);
+            // //entries.forEach(entry =>console.log(entry.name)  );
 
-            Selection.items[0].fill = fill;
+                const path = file.nativePath;
+                console.log(path.substr(path.lastIndexOf('/')+1));
+                    let fill = new ImageFill(compressedImage);
+
+                    selection.items[0].fill = fill(fill);
+
+                    selection.items[1].removeFromParent();
+
     }
 }
 
