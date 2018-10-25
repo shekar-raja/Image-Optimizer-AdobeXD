@@ -13,19 +13,14 @@ const command = require("commands");
 // Main Handler Function
 async function myPluginCommand(selection) 
 {
-
+    // const pluginFolder = await fs.getDataFolder();
+   
+    const pluginFolders = await fs.getPluginFolder();
+    const entries = await pluginFolders.getEntries();
     if (selection.items.length > 0) {
 
-        // Getting Plugin data folder.
-        const pluginFolder = await fs.getDataFolder();
-        const entriesbefore = await pluginFolder.getEntries();
-        entriesbefore.forEach(entry => console.log(entry.name));
-
-        // const after_img = await pluginFolder.getEntry('aimage.jpg');
-
-        // await after_img.delete();
         // Creating a temp file to store the result.
-        const file = await pluginFolder.createFile("aimage.jpg",{ overwrite: true});
+        const file = await pluginFolders.createFile("aimage.jpg",{ overwrite: true});
         const renditions = [{
             node: selection.items[0],
             outputFile: file,
@@ -33,6 +28,7 @@ async function myPluginCommand(selection)
             scale: 1.0,
             quality:50
         }];
+        // entries.forEach(entry => console.log(entry.name));
 
         application.createRenditions(renditions)
             .then(results => {
@@ -69,24 +65,23 @@ async function myPluginCommand(selection)
                 console.log(error);
             })
            
-           try{
+           
             
-            const pluginFolders = await fs.getPluginFolder();
-            const entries = await pluginFolders.getEntries();
-            const entry = await pluginFolders.getEntry('aimage.jpg');
-            
-            // entries.forEach(entry => console.log(entry.name));
-            let fill = new ImageFill(entry);
+            // const entry  = await pluginFolders.getEntry("aimage.jpg");
+
+            let fill = new ImageFill(file);
 
             selection.items[0].fill = fill;
-            // console.log("Image is replaced!");
-            
-           }catch(error)
-           {
-               console.log("Can't fill the image ERROR: ",error);
-           }
 
+            // await file.delete();
+            // // entries.forEach(entry => console.log(entry.name));
+            // let fill = new ImageFill(entrys);
+
+            // selection.items[0].fill = fill;
+
+            // file.delete();
     }
+    
 }
 
 function base64ArrayBuffer(arrayBuffer) {
