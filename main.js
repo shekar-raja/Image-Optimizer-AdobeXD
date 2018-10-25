@@ -18,7 +18,7 @@ async function myPluginCommand(selection)
 
         // Getting Plugin data folder
         const pluginFolder = await fs.getDataFolder();
-        const file = await pluginFolder.createFile("rendition.jpg",{ overwrite: true});
+        const file = await pluginFolder.createFile("aimage.jpg",{ overwrite: true});
         const renditions = [{
             node: selection.items[0],
             outputFile: file,
@@ -60,30 +60,22 @@ async function myPluginCommand(selection)
                 console.log(error);
             })
            
-           
+           try{
             
             const pluginFolders = await fs.getPluginFolder();
             const entries = await pluginFolders.getEntries();
-            const compressedImage = await pluginFolder.getEntry('rendition.jpg');
+            const entry = await pluginFolders.getEntry('aimage.jpg');
+            // var meta = await entry.read();
+            // console.log(file.nativePath);
 
-            console.log(compressedImage)
-            // selection.items[0].removeFromParent();
-            // node = selection.items[0];
-            // command.duplicate();
-            
-        
-            // Removing the "z" node
-            //selection.items[0].removeFromParent();
-            console.log("The compressed image file is: ",compressedImage.name);
-            // //entries.forEach(entry =>console.log(entry.name)  );
+            let fill = new ImageFill(entry);
 
-                const path = file.nativePath;
-                console.log(path.substr(path.lastIndexOf('/')+1));
-                    let fill = new ImageFill(compressedImage);
-
-                    selection.items[0].fill = fill(fill);
-
-                    selection.items[1].removeFromParent();
+            selection.items[0].fill = fill;
+            console.log("Image is replaced!");
+           }catch(error)
+           {
+               console.log("Can't fill the image ERROR: ",error);
+           }
 
     }
 }
