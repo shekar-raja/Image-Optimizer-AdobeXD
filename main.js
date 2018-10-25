@@ -16,8 +16,15 @@ async function myPluginCommand(selection)
 
     if (selection.items.length > 0) {
 
-        // Getting Plugin data folder
+        // Getting Plugin data folder.
         const pluginFolder = await fs.getDataFolder();
+        const entriesbefore = await pluginFolder.getEntries();
+        entriesbefore.forEach(entry => console.log(entry.name));
+
+        // const after_img = await pluginFolder.getEntry('aimage.jpg');
+
+        // await after_img.delete();
+        // Creating a temp file to store the result.
         const file = await pluginFolder.createFile("aimage.jpg",{ overwrite: true});
         const renditions = [{
             node: selection.items[0],
@@ -35,18 +42,19 @@ async function myPluginCommand(selection)
 
                 // main container
                 let container = document.createElement("div");
-                container.style.minWidth = 400;
-                container.style.padding = 40;
+                // container.style.minWidth = 400;
+                // container.style.padding = 60;
 
                 // add content
-                let title = document.createElement("h3");
+                let title = document.createElement("h2");
                 title.style.padding = 20;
-                title.textContent = `PNG Rendition has been saved at ${file.nativePath}`;
+                title.textContent = `Compress Now worked!`;
                 container.appendChild(title);
 
                 // close button
                 let closeButton = document.createElement("button");
                 closeButton.textContent = "Got it!";
+                closeButton.style.padding = 20;
                 container.appendChild(closeButton);
                 closeButton.onclick = (e) => {
                     dialog.close();
@@ -55,6 +63,7 @@ async function myPluginCommand(selection)
                 document.body.appendChild(dialog);
                 dialog.appendChild(container);
                 dialog.showModal()
+                
             })
             .catch(error => {
                 console.log(error);
@@ -65,13 +74,13 @@ async function myPluginCommand(selection)
             const pluginFolders = await fs.getPluginFolder();
             const entries = await pluginFolders.getEntries();
             const entry = await pluginFolders.getEntry('aimage.jpg');
-            // var meta = await entry.read();
-            // console.log(file.nativePath);
-
+            
+            // entries.forEach(entry => console.log(entry.name));
             let fill = new ImageFill(entry);
 
             selection.items[0].fill = fill;
-            console.log("Image is replaced!");
+            // console.log("Image is replaced!");
+            
            }catch(error)
            {
                console.log("Can't fill the image ERROR: ",error);
