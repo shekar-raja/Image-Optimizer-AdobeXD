@@ -15,12 +15,19 @@ async function myPluginCommand(selection)
 {
     // const pluginFolder = await fs.getDataFolder();
    
-    const pluginFolders = await fs.getPluginFolder();
-    const entries = await pluginFolders.getEntries();
+    const pluginFolder = await fs.getPluginFolder();
+    // const entries = await pluginFolder.getEntries();
     if (selection.items.length > 0) {
 
+        
         // Creating a temp file to store the result.
-        const file = await pluginFolders.createFile("aimage.jpg",{ overwrite: true});
+        const file = await pluginFolder.createFile("compressed.jpg",{ overwrite: true});
+        
+        if(file.isEntry)
+        {
+            file.delete();
+        }
+        //await file.delete();
         const renditions = [{
             node: selection.items[0],
             outputFile: file,
@@ -28,37 +35,37 @@ async function myPluginCommand(selection)
             scale: 1.0,
             quality:50
         }];
-        // entries.forEach(entry => console.log(entry.name));
+        
 
         application.createRenditions(renditions)
             .then(results => {
                 
-                // create the dialog
-                let dialog = document.createElement("dialog");
+                // // create the dialog
+                // let dialog = document.createElement("dialog");
 
-                // main container
-                let container = document.createElement("div");
-                // container.style.minWidth = 400;
-                // container.style.padding = 60;
+                // // main container
+                // let container = document.createElement("div");
+                // // container.style.minWidth = 400;
+                // // container.style.padding = 60;
 
-                // add content
-                let title = document.createElement("h2");
-                title.style.padding = 20;
-                title.textContent = `Compress Now worked!`;
-                container.appendChild(title);
+                // // add content
+                // let title = document.createElement("h2");
+                // title.style.padding = 20;
+                // title.textContent = `Compress Now worked!`;
+                // container.appendChild(title);
 
-                // close button
-                let closeButton = document.createElement("button");
-                closeButton.textContent = "Got it!";
-                closeButton.style.padding = 20;
-                container.appendChild(closeButton);
-                closeButton.onclick = (e) => {
-                    dialog.close();
-                }
+                // // close button
+                // let closeButton = document.createElement("button");
+                // closeButton.textContent = "Got it!";
+                // closeButton.style.padding = 20;
+                // container.appendChild(closeButton);
+                // closeButton.onclick = (e) => {
+                //     dialog.close();
+                // }
 
-                document.body.appendChild(dialog);
-                dialog.appendChild(container);
-                dialog.showModal()
+                // document.body.appendChild(dialog);
+                // dialog.appendChild(container);
+                // dialog.showModal()
                 
             })
             .catch(error => {
@@ -67,7 +74,7 @@ async function myPluginCommand(selection)
            
            
             
-            // const entry  = await pluginFolders.getEntry("aimage.jpg");
+            // const entry  = await pluginFolder.getEntry("compressed.jpg");
 
             let fill = new ImageFill(file);
 
