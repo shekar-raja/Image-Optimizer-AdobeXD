@@ -1,19 +1,19 @@
-
+// Requiring API's
 const application = require("application");
 const fs = require("uxp").storage.localFileSystem;
 const ImageFill = require("scenegraph").ImageFill;
 const command = require("commands");
 
+// Iterating two times for making rendered image into fill.
 for(let i=0;i<2;i++)
 {
 // Main Handler Function
-async function myPluginCommand(selection) 
+async function mainFunction(selection) 
 {   
-    
-        
-        const pluginFolder = await fs.getTemporaryFolder();
+        //     
+        const tempFolder = await fs.getTemporaryFolder();
         // Creating temporary file
-        const file = await pluginFolder.createFile('compressed.jpg', { overwrite: true });
+        const file = await tempFolder.createFile('compressed.jpg', { overwrite: true });
             
         // Creating renditions
         const renditions = [{
@@ -64,7 +64,8 @@ async function myPluginCommand(selection)
                 .catch(error => {
                     console.log("File creation error");
                 })
-                
+            
+            // Image filling to the selection try
             try{
                 let fill = new ImageFill(file);
                 
@@ -74,35 +75,31 @@ async function myPluginCommand(selection)
             {
                 console.log("Image not filled")
             }    
-                // Checking the entry
-                try
-                {
-                    const imageentry = await pluginFolder.getEntry("compressed.jpg");
-                    console.log("Found compressed image entry");
-                }
-                catch(Error)
-                {
-                    console.log("No compressed image entry found");
-                }
 
-                try
+            // Try block for checking if there image entry
+            // If exists deletes the temp image entry
+            try
+            {
+                const imageentry = await tempFolder.getEntry("compressed.jpg");
+                if(imageentry.name == "compressed.jpg")
                 {
-                    const imageentry = await pluginFolder.getEntry("compressed.jpg");
-                    if(imageentry.name == "compressed.jpg")
-                    {
-                        await imageentry.delete();
-                        console.log("Deleted temporary storage!");
-                    }
-                    else
-                    {
-                        console.log("No file found");
-                    }
+                    await imageentry.delete();
+                    console.log("Deleted temporary storage!");
                 }
-                catch(Error)
+                else
                 {
-                    console.log("Can't delete image");
+                    // UI to print Select image file to compress
                 }
-            
+            }
+            catch(Error)
+            {
+                console.log("Can't delete image");
+            }
+                
+        }
+        else
+        {
+            // UI for printing Select an image file to perform compression.
         }
     
     
@@ -112,7 +109,7 @@ async function myPluginCommand(selection)
 // Exporting modules via JSON.
 module.exports = {
     commands: {
-        myPluginCommand: myPluginCommand
+        myPluginCommand: mainFunction
         
     }
 };
