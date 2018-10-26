@@ -24,7 +24,7 @@
          "type":"menu",
          "label":"Compress Now",
          "commandId":"myPluginCommand",
-         "shortcut":[{"win":"Ctrl+Shift+C"}]
+         "shortcut": { "mac": "Cmd+Shift+P", "win": "Ctrl+Shift+P" }
       }
    ]
 }

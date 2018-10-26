@@ -3,7 +3,6 @@ const fs = require("uxp").storage.localFileSystem;
 const ImageFill = require("scenegraph").ImageFill;
 const command = require("commands");
 
-
 // Main Handler Function
 async function myPluginCommand(selection) 
 {   
@@ -18,7 +17,7 @@ async function myPluginCommand(selection)
         outputFile: file,
         type: "jpg",
         scale: 1.0,
-        quality:50
+        quality:70
     }];
 
     // User should select atleast one node.
