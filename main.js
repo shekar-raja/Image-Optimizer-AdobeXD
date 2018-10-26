@@ -8,18 +8,40 @@ async function myPluginCommand(selection)
 {   
     const pluginFolder = await fs.getTemporaryFolder()    
 
-    if (selection.items.length > 0) {
-            const file = await pluginFolder.createFile('compressed.jpg', { overwrite: true });
+    if (selection.items.length > 0) 
+    {
+        // Creating temporary file
+        const file = await pluginFolder.createFile('compressed.jpg', { overwrite: true });
         
-            const renditions = [{
-                node: selection.items[0],
-                outputFile: file,
-                type: "jpg",
-                scale: 1.0,
-                quality:50
-            }];
-            
+        // Creating renditions
+        const renditions = [{
+            node: selection.items[0],
+            outputFile: file,
+            type: "jpg",
+            scale: 1.0,
+            quality:50
+        }];
+        try{
+        const imageentry = await pluginFolder.getEntry("compressed.jpg");
+        }catch(Error)
+        {
+            console.log(Error);
+        }
+        try{
+            const imageentry = await pluginFolder.getEntry("compressed.jpg");
+        if(imageentry.name == "compressed.jpg"){
 
+            await imageentry.delete();
+            console.log("Deleted temporary storage!");
+        }
+        else
+        {
+            console.log("No file found");
+        }
+        }catch(Error)
+        {
+            console.log(Error);
+        }
         application.createRenditions(renditions)
             .then(results => {
                 
@@ -31,7 +53,7 @@ async function myPluginCommand(selection)
                 // container.style.minWidth = 400;
                 // container.style.padding = 60;
 
-                // // add content
+                // // add conten
                 // let title = document.createElement("h2");
                 // title.style.padding = 20;
                 // title.textContent = `Compress Now worked!`;
@@ -49,55 +71,27 @@ async function myPluginCommand(selection)
                 // document.body.appendChild(dialog);
                 // dialog.appendChild(container);
                 // dialog.showModal()
+                console.log("Image Created");
                 
             })
             .catch(error => {
-                console.log(error);
+                
             })
-
-            
+        
+        let fill = new ImageFill(file);
+        selection.items[0].fill = fil;
+        // filler(file,selection.items[0])
+        
         // Deleting the temporarily stored image.
-        const imageentry = await pluginFolder.getEntry("compressed.jpg");    
-
-        if(imageentry.name == "compressed.jpg"){
-
-            await imageentry.delete();
-            console.log("Temporary file delete sucess!");
-        }
-        else
-        {
-            console.log("Error deleting the file");
-        }
-            
-    //         try{
-
-    //         const imagefile = await pluginFolder.getEntry('compressed.jpg');
-    //         console.log("Entry not found");
-    //     }catch(Error)
-    //     {
-    //         console.log(error);
-    //     }
-            // console.log("The file name is :",imagefile.name);
-            
-            // let fill = new ImageFill(pluginFolder.read(imagefile));
-
-            // selection.items[0].fill = fill;
-
-            
-            //selection.items[1].removeFromParent();
-
-            // try
-            // {
-            //         await imagefile.delete();
-            //         console.log("Deleted the previous image from directory");
-            // }
-            // catch(err)
-            // {
-            //     console.log("Error in deleting the file");
-            // }
-            
-    //}   
+        
     }
+}
+
+function filler(file,node)
+{
+    let fill = new ImageFill(file);
+
+    node.fill = fill;
 }
 
 // Exporting modules via JSON.
