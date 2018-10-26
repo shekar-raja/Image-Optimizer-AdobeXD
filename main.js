@@ -99,8 +99,8 @@ async function myPluginCommand(selection)
                 {
                     console.log("Can't delete image");
                 }
-            // }   
-        // }     
+            // }
+       // }     
     }
 }
 
