@@ -13,12 +13,12 @@ the file size.
 3. `Now you can use it`
 
 ### Benifits
-1. `XD file size can be optimized`
-2.`Sharing prototypes made faster`
+* `XD file size can be optimized`
+* `Sharing prototypes made faster`
 
 ### Limitations
-1. `Only one image at a time can be compressed`
-2. `UI bugs`
+* `Only one image at a time can be compressed`
+* `UI bugs`
 
 ### Get In Touch
 Please report bugs, observations, ideas & feature requests as [issues](https://github.com/irajashekarb/Image-Optimizer/issues) or mail.
