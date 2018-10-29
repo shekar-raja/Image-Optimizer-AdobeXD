@@ -12,6 +12,13 @@ the file size.
 2. `Double click on the downloaded file`
 3. `Now you can use it`
 
+### Usage
+1. `Select the image file`
+2. `Click on the plugin Image Optimizer`
+3. `Now you can use it`
+
+![](https://github.com/irajashekarb/Image-Optimizer-AdobeXD/blob/master/images/Usage.gif)
+
 ### Benifits
 * `XD file size can be optimized`
 * `Sharing prototypes made faster`
