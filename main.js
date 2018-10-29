@@ -43,83 +43,75 @@ for(let i=0;i<2;i++)
     // Main Handler Function
     async function mainFunction(selection) 
     {   
-            // Getting temporary folder 
-            const tempFolder = await fs.getTemporaryFolder();
+        // Getting temporary folder 
+        const tempFolder = await fs.getTemporaryFolder();
 
-            // Creating temporary file into temporary folder
-            const file = await tempFolder.createFile('rendition.jpg', { overwrite: true });
-                
-            // Creating renditions
-            const renditions = [{
-                node: selection.items[0],
-                outputFile: file,
-                // Can change the image file type
-                type: "jpg",
-                scale: 1.0,
-                // Can change the quality of image file
-                quality:60
-            }];
+        // Creating temporary file into temporary folder
+        const file = await tempFolder.createFile('rendition.jpg', { overwrite: true });
             
-            // User should select atleast one node.
-            if (selection.items.length > 0) 
-            {
+        // Creating renditions
+        const renditions = [{
+            node: selection.items[0],
+            outputFile: file,
+            // Can change the image file type
+            type: "jpg",
+            scale: 1.0,
+            // Can change the quality of image file
+            quality:60
+        }];
+        
+        // User should select atleast one node.
+    
+        if (selection.items.length > 0) 
+        {
+            
+            // Creating rendition
+            await application.createRenditions(renditions)
+                .then(results => {
+                    console.log("Image Created");
+                })
+                .catch(error => {
+                    console.log("File creation error");
+                })
+                // Image filling to the selection try
                 try{
-                    // Creating rendition
-                    await application.createRenditions(renditions)
-                        .then(results => {
-                            console.log("Image Created");
-                        })
-                        .catch(error => {
-                            console.log("File creation error");
-                        })
+                    if(file.name === "rendition.jpg")
+                    {
+                    let fill = new ImageFill(file);
                     
-                    // Image filling to the selection try
-                    try{
-                        let fill = new ImageFill(file);
-                        
-                        selection.items[0].fill = fill;
-                        console.log("Image Filled");
+                    selection.items[0].fill = fill;
+                    console.log("Image Filled");
+                    
                     }
-                    catch(Error)
-                    {
-                        console.log("Image not compressed and filled")
+                    else{
                         showError();
-                    }    
+                    }
 
-                    // Try block for checking if there image entry
-                    // If exists deletes the temp image entry
-                    try
+                }
+                catch(Error)
+                {
+                    console.log("Image not compressed and filled")
+                    showError();
+                }    
+
+                // Try block for checking if there image entry
+                // If exists deletes the temp image entry
+                try
+                {
+                    const imageentry = await tempFolder.getEntry("rendition.jpg");
+                    if(imageentry.name == "rendition.jpg")
                     {
-                        const imageentry = await tempFolder.getEntry("rendition.jpg");
-                        if(imageentry.name == "rendition.jpg")
-                        {
-                            try{
-                                await imageentry.delete();
-                                console.log("Deleted temporary storage!");
-                                let dialog;
-                                dialog = h("dialog",
-                                            h("form", { method: "dialog", style: { width: 'auto', height: 'auto'} },
-                                                h("header",
-                                                h("h1","Compression Successful")),
-                                                // h("footer",
-                                                    h("button", { uxpVariant: "cta", onclick(e) { dialog.close() } },"OK")
-                                                )
-                                            )
-                                        // )
-                                document.body.appendChild(dialog);
-                                dialog.showModal();
-                            }
-                            catch(Error)
-                            {
-                                showError();
-                            }
+                        try{
+                            await imageentry.delete();
+                            console.log("Deleted temporary storage!");
+                            showdialog();
                         }
-                        else
+                        catch(Error)
                         {
                             showError();
                         }
                     }
-                    catch(Error)
+                    else
                     {
                         showError();
                     }
@@ -128,14 +120,31 @@ for(let i=0;i<2;i++)
                 {
                     showError();
                 }
-                
-            }
-            else
-            {
-                showError();
-            }
-    }
+        }
+        else
+        {
+            showError();
+        }        
+}
+    
 
+    // Function for showing dialog message
+    function showdialog()
+    {
+        let dialog;
+        dialog = h("dialog",
+                    h("form", { method: "dialog", style: { width: 'auto', height: 'auto'} },
+                        h("header",
+                        h("img", { src: "images/sucess.png", width: 24 , height: 24 } ),
+                        h("h1","Optimized")),
+                        // h("footer",
+                            h("button", { uxpVariant: "cta", onclick(e) { dialog.close() } },"OK")
+                        )
+                    )
+                // )
+        document.body.appendChild(dialog);
+        dialog.showModal();
+    }
     // Asynchronous Function to show error
     async function showError()
     {
