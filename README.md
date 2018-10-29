@@ -12,6 +12,10 @@ the file size.
 2. `Double click on the downloaded file`
 3. `Now you can use it`
 
+### Limitations
+1. `Only one image at a time can be compressed`
+2. `UI bugs`
+
 ### Get In Touch
 Please report bugs, observations, ideas & feature requests as [issues](https://github.com/irajashekarb/Image-Optimizer/issues) or mail.
 
