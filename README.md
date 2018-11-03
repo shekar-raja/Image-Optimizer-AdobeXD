@@ -23,7 +23,7 @@ the file size.
 * `XD file size can be optimized`
 * `Sharing prototypes made faster`
 
-### Limitations
+### Known Bugs
 * `Only one image at a time can be compressed`
 * `UI bugs`
 
