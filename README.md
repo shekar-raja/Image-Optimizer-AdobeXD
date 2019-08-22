@@ -1,4 +1,4 @@
-![alt text](https://github.com/irajashekarb/Image-Optimizer/blob/master/images/icon.png)
+![alt text](https://github.com/irajashekarb/Image-Optimizer/blob/master/images/icon@0.5.png)
 
 # Image-Optimizer
 #### Image Compression plugin for ADOBE XD
