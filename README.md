@@ -34,6 +34,6 @@ Please report bugs, observations, ideas & feature requests as [issues](https://g
 * Thank you [Adobe-XD-Platform](https://adobexdplatform.com/plugin-docs/) and [TechAspect Solutions](https://www.tadigital.com/) for the support.
 
 ### Contact support with questions: 
-irajashekarb@gmail.com
+rajashekarb.dev@gmail.com
 
 
