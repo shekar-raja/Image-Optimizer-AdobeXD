@@ -61,7 +61,6 @@ for(let i=0;i<2;i++)
         }];
         
         // User should select atleast one node.
-    
         if (selection.items.length > 0) 
         {
             
