@@ -44,10 +44,10 @@ for(let i=0;i<2;i++)
     async function mainFunction(selection) 
     {   
         // Getting temporary folder 
-        const tempFolder = await fs.getTemporaryFolder();
+        const folder = await fs.getTemporaryFolder();
 
         // Creating temporary file into temporary folder
-        const file = await tempFolder.createFile('rendition.jpg', { overwrite: true });
+        const file = await folder.createFile('rendition.jpg', { overwrite: true });
             
         // Creating renditions
         const renditions = [{
@@ -97,7 +97,7 @@ for(let i=0;i<2;i++)
                 // If exists deletes the temp image entry
                 try
                 {
-                    const imageentry = await tempFolder.getEntry("rendition.jpg");
+                    const imageentry = await folder.getEntry("rendition.jpg");
                     if(imageentry.name == "rendition.jpg")
                     {
                         try{
